@@ -1,6 +1,6 @@
 @Library('shared') _
 
-pipeline (
+pipeline {
     agent any
 
     parameters {
@@ -15,9 +15,9 @@ pipeline (
                 pruneDockerTags(
                     username: params.USERNAME,
                     repo:     params.REPO,
-                    keepLast  params.KEEP_LAST.toInteger()
+                    keepLast:  params.KEEP_LAST.toInteger()
                 )
             }
         }
     }
-)
+}
