@@ -7,7 +7,7 @@ def call(Map config = [:]) {
     def credentialsId = config.credentialsId ?: 'dockerhub-credentials'
     def protectedTags = config.protectedTags ?: ['latest']
     
-    def hub = new DockertHub(this)
+    def hub = new DockerHub(this)
     hub.apiLogin(credentialsId)
     hub.pruneTags(username, repo, keepLast, protectedTags)
 }
