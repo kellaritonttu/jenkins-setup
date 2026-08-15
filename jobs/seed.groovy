@@ -1,3 +1,11 @@
+// __ folders ___________________________________________________________________
+folder('infrastructure') {
+    description('Infrastructure jobs')
+}
+
+
+// __ infrastructure jobs _______________________________________________________
+
 pipelineJob('infrastructure/dockerhub-cleanup') {
     definition {
         cpsScm {
