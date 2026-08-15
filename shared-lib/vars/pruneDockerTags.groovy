@@ -1,4 +1,5 @@
 import org.myjenkins.DockerHub
+import groovy.json.JsonSlurperClassic
 
 def call(Map config = [:]) {
     def username      = config.username      ?: error('pruneDockerTags: username is required')
@@ -9,7 +10,6 @@ def call(Map config = [:]) {
 
     def apiToken = ''
 
-    // login
     withCredentials([usernamePassword(
         credentialsId: credentialsId,
         usernameVariable: 'DOCKERHUB_USER',
@@ -24,11 +24,10 @@ def call(Map config = [:]) {
             returnStdout: true
         ).trim()
 
-        apiToken = DockerHub.parseToken(response)
+        apiToken = new JsonSlurperClassic().parseText(response).token
     }
 
-    // get tags
-    def response = sh(
+    def tagsResponse = sh(
         script: """
             curl -fsSL \
                 "https://hub.docker.com/v2/repositories/${username}/${repo}/tags/?page_size=100&ordering=-last_updated" \
@@ -37,7 +36,11 @@ def call(Map config = [:]) {
         returnStdout: true
     ).trim()
 
-    def tags = DockerHub.parseTags(response)
+    def tags = new JsonSlurperClassic()
+        .parseText(tagsResponse)
+        .results
+        .collect { [name: it.name, last_updated: it.last_updated] }
+
     echo "Found ${tags.size()} tag(s), keeping ${keepLast} most recent"
 
     if (tags.size() <= keepLast) {
@@ -47,7 +50,8 @@ def call(Map config = [:]) {
 
     def tagsToDelete = tags[keepLast..-1]
 
-    for (def tag in tagsToDelete) {
+    for (int i = 0; i < tagsToDelete.size(); i++) {
+        def tag = tagsToDelete[i]
         if (protectedTags.contains(tag.name)) {
             echo "Skipping protected tag: ${tag.name}"
             continue
