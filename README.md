@@ -39,19 +39,17 @@ After startup, run the seed job to create all pipeline jobs defined in `jobs/see
 
 | Plugin | Description |
 | --- | --- |
-| configuration-as-code | Jenkins configuration as code (JCasC) |
+| configuration-as-code | JCasC |
 | job-dsl | Programmatic job creation via seed job |
 | git | Git SCM integration |
-| git-client | Git client library (git dependency) |
-| workflow-aggregator | Pipeline suite — includes all core pipeline plugins |
+| git-client | git dependency |
+| workflow-aggregator | core pipeline plugins |
 | pipeline-model-definition | Declarative pipeline syntax |
 | pipeline-groovy-lib | Shared Groovy library support |
 | docker-workflow | Docker Pipeline plugin |
 | docker-commons | Shared Docker utilities |
 | credentials-binding | Bind credentials to environment variables |
-| plain-credentials | Plain text credentials storage |
-| ssh-credentials | SSH credentials storage |
-| ws-cleanup | Workspace cleanup after builds |
+| ws-cleanup | Workspace cleanup |
 | timestamper | Timestamps in build logs |
 | ansicolor | Colored output in build logs |
 | blueocean | Cool UI |
