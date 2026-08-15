@@ -3,6 +3,10 @@ folder('infrastructure') {
     description('Infrastructure jobs')
 }
 
+folder('simple-chat') {
+    description('Jobs of the Simple Chat project')
+}
+
 
 // __ infrastructure jobs _______________________________________________________
 
@@ -26,6 +30,34 @@ pipelineJob('infrastructure/dockerhub-cleanup') {
                 }
             }
             scriptPath('jobs/infrastructure/dockerhub-cleanup.groovy')
+            lightweight(false)
+        }
+    }
+}
+
+
+// __ simple chat jobs _________________________________________________________
+
+pipelineJob('simple-chat/test-backend') {
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/kellaritonttu/simple-chat.git')
+                        refspec('+refs/heads/*:refs/remotes/origin/*')
+                    }
+                    branch('dev')
+                    extensions {
+                        cloneOptions {
+                            noTags(false)
+                            shallow(true)
+                            depth(1)
+                        }
+                    }
+                }
+            }
+            scriptPath('backend/Jenkinsfile.test')
             lightweight(false)
         }
     }

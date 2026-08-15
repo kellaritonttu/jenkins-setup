@@ -1,6 +1,6 @@
 def call(Map config = [:]) {
-    def composeFile = config.conposeFile ?: 'docker-compose.test.yaml'
-    def workDir     = config.wordDir     ?: '.'
+    def composeFile = config.composeFile ?: 'docker-compose.test.yaml'
+    def workDir     = config.workDir     ?: '.'   
 
     def upCmd = "docker-compose -f ${composeFile} up --build --abort-on-container-exit"
 
