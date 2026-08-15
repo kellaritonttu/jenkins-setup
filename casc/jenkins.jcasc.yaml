@@ -33,9 +33,15 @@ jobs:
   - script: >
       pipelineJob('seed') {
         definition {
-          cps {
-            script(readFileFromWorkspace('/var/jenkins_jobs/seed.groovy'))
-            sandbox(false)
+          cpsScm {
+            scm {
+              git {
+                remote { url('https://github.com/kellaritonttu/jenkins-setup') }
+                branch('main')
+              }
+            }
+            scriptPath('jobs/seed.groovy')
+            lightweight(true)
           }
         }
       }

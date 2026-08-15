@@ -16,7 +16,7 @@ services:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - ./casc/jenkins.jcasc.yaml:/var/jenkins_casc/jenkins.yaml:ro
-      - ./jobs:/var/jenkins_jobs:ro
+      - ./shared-lib:/var/jenkins_sharedlib:ro
     ports:
       - "8080:8080"
       - "50000:50000"

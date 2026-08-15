@@ -9,7 +9,7 @@ pipelineJob('infrastructure/dockerhub-cleanup') {
             branch('main')
             }
         }
-        scriptPath('jobs.infrastructure/dockerhub-cleanup.groove')
+        scriptPath('jobs/infrastructure/dockerhub-cleanup.groove')
         lightweight(true)
         }
     }
