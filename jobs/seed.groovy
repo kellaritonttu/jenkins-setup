@@ -9,16 +9,16 @@ folder('infrastructure') {
 pipelineJob('infrastructure/dockerhub-cleanup') {
     definition {
         cpsScm {
-        scm {
-            git {
-            remote {
-                url("https://github.com/kellaritunttu/jenkins-setup")
+            scm {
+                git {
+                    remote {
+                        url('git://github.com/kellaritonttu/jenkins-setup.git')
+                    }
+                    branch('main')
+                }
             }
-            branch('main')
-            }
-        }
-        scriptPath('jobs/infrastructure/dockerhub-cleanup.groovy')
-        lightweight(false)
+            scriptPath('jobs/infrastructure/dockerhub-cleanup.groovy')
+            lightweight(false)
         }
     }
-    }
+}
