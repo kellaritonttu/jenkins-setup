@@ -48,13 +48,10 @@ security:
     sshHostKeyVerificationStrategy: "noHostKeyVerificationStrategy"
 
 unclassified:
-  gitscm:
+  scmGit:
     globalConfigEmail: "jenkins@local"
     globalConfigName: "Jenkins"
-    useExistingAccountWithSameEmail: false
-    addGitTagAction: false
-    disableGitToolChooser: false
-    hideCredentials: false
+    createAccountBasedOnEmail: false
     showEntireCommitSummaryInChanges: false
   
   globalLibraries:

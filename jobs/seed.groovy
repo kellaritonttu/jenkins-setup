@@ -12,9 +12,17 @@ pipelineJob('infrastructure/dockerhub-cleanup') {
             scm {
                 git {
                     remote {
-                        url('git://github.com/kellaritonttu/jenkins-setup.git')
+                        url('https://github.com/kellaritonttu/jenkins-setup.git')
+                        refspec('+refs/heads/*:refs/remotes/origin/*')
                     }
                     branch('main')
+                    extensions {
+                        cloneOptions {
+                            noTags(false)
+                            shallow(true)
+                            depth(1)
+                        }
+                    }
                 }
             }
             scriptPath('jobs/infrastructure/dockerhub-cleanup.groovy')
