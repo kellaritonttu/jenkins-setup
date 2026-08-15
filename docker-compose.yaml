@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile.jenkins
     container_name: jenkins
     restart: on-failure
+    user: root
     env_file:
       - .env
     environment:

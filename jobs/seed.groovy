@@ -61,4 +61,7 @@ pipelineJob('simple-chat/test-backend') {
             lightweight(false)
         }
     }
+    wrappers {
+        preBuildCleanup()
+    }
 }
