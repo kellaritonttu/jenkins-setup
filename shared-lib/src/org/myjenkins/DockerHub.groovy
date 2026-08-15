@@ -103,7 +103,7 @@ class DockerHub implements Serializable {
 
         def tagsToDelete = tags[keepLast..-1]
         
-        for def (tag in tagsToDelete) {
+        for (def tag in tagsToDelete) {
             if (protectedTags.contains(tag.name)) {
                 steps.echo "Skipping protected tag: ${tag.name}"
                 return
