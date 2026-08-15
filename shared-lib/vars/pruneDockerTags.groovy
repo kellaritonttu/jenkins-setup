@@ -1,4 +1,4 @@
-import org.myjenkins.DockertHub
+import org.myjenkins.DockerHub
 
 def call(Map config = [:]) {
     def username = config.username ?: error('pruneDockerTags: username is required')
