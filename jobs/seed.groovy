@@ -18,7 +18,7 @@ pipelineJob('infrastructure/dockerhub-cleanup') {
             }
         }
         scriptPath('jobs/infrastructure/dockerhub-cleanup.groovy')
-        lightweight(true)
+        lightweight(false)
         }
     }
     }

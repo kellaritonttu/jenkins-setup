@@ -19,15 +19,7 @@ credentials:
               username: "${DOCKERHUB_USERNAME}"
               password: "${DOCKERHUB_TOKEN}"
               description: "Docker Hub access token"
-              scope: GLOBAL
-
-          - usernamePassword:
-              id: github-credentials
-              username: "${GITHUB_USERNAME}"
-              password: "${GITHUB_TOKEN}"
-              description: "GitHub fine-grained PAT"
-              scope: GLOBAL
- 
+              scope: GLOBAL 
 
 jobs:
   - script: >
@@ -51,7 +43,20 @@ jobs:
         }
       }
 
+security:
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: "noHostKeyVerificationStrategy"
+
 unclassified:
+  gitscm:
+    globalConfigEmail: "jenkins@local"
+    globalConfigName: "Jenkins"
+    useExistingAccountWithSameEmail: false
+    addGitTagAction: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+  
   globalLibraries:
     libraries:
       - name: "shared"
