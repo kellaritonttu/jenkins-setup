@@ -17,18 +17,24 @@ credentials:
     domainCredentials:
       - credentials:
           - usernamePassword:
-              id: dockerhub-credentials
-              username: "${DOCKERHUB_USERNAME}"
-              password: "${DOCKERHUB_TOKEN}"
-              description: "Docker Hub access token"
-              scope: GLOBAL 
+            id: dockerhub-credentials
+            username: "${DOCKERHUB_USERNAME}"
+            password: "${DOCKERHUB_TOKEN}"
+            description: "Docker Hub access token"
+            scope: GLOBAL 
 
           - usernamePassword:
-              id: github-credentials
-              username: "${GITHUB_USERNAME}"
-              password: "${GITHUB_TOKEN}"
-              description: "GitHub fine-grained PAT"
-              scope: GLOBAL
+            id: github-credentials
+            username: "${GITHUB_USERNAME}"
+            password: "${GITHUB_TOKEN}"
+            description: "GitHub fine-grained PAT"
+            scope: GLOBAL
+
+          - string:
+            id: terraform-cloud-token
+            secret: "${TF_CLOUD_TOKEN}"
+            scope: GLOBAL
+            description: "Terraform Cloud API token"
 
 jobs:
   - script: >
