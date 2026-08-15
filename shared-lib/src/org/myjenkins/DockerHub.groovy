@@ -1,4 +1,4 @@
-package org.kellaritonttu
+package org.myjenkins
 
 import groovy.json.JsonSlurper
 

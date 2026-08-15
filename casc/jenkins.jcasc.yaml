@@ -64,3 +64,4 @@ unclassified:
             scm:
               git:
                 remote: "https://github.com/kellaritonttu/jenkins-setup"
+            libraryPath: "shared-lib/"

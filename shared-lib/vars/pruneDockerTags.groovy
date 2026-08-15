@@ -1,4 +1,4 @@
-import org.myjenkins.DockerHub
+import org.myjenkins.DockertHub
 
 def call(Map config = [:]) {
     def username = config.username ?: error('pruneDockerTags: username is required')
@@ -7,7 +7,7 @@ def call(Map config = [:]) {
     def credentialsId = config.credentialsId ?: 'dockerhub-credentials'
     def protectedTags = config.protectedTags ?: ['latest']
     
-    def hub = new DocumentHub(this)
+    def hub = new DockertHub(this)
     hub.apiLogin(credentialsId)
     hub.pruneTags(username, repo, keepLast, protectedTags)
 }
