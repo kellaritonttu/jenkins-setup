@@ -1,5 +1,7 @@
 jenkins:
   numExecutors: 2
+  crumbIssuer:
+    standard: {}
   securityRealm:
     local:
       allowsSignup: false
@@ -20,6 +22,13 @@ credentials:
               password: "${DOCKERHUB_TOKEN}"
               description: "Docker Hub access token"
               scope: GLOBAL 
+
+          - usernamePassword:
+              id: github-credentials
+              username: "${GITHUB_USERNAME}"
+              password: "${GITHUB_TOKEN}"
+              description: "GitHub fine-grained PAT"
+              scope: GLOBAL
 
 jobs:
   - script: >
@@ -43,16 +52,18 @@ jobs:
       }
 
 security:
-  gitHostKeyVerificationConfiguration:
-    sshHostKeyVerificationStrategy: "noHostKeyVerificationStrategy"
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
 
 unclassified:
+  location:
+    url: "http://localhost:8080/"
   scmGit:
     globalConfigEmail: "jenkins@local"
     globalConfigName: "Jenkins"
     createAccountBasedOnEmail: false
     showEntireCommitSummaryInChanges: false
-  
+
   globalLibraries:
     libraries:
       - name: "shared"

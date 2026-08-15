@@ -1,6 +1,6 @@
 # jenkins-setup
 
-My JCasC setup with Docker availability through DinD container and simple Pipeline Job's management.
+My JCasC setup with shared Groovy library and seed job for personal projects.
 
 ## Prerequisites
 
@@ -33,42 +33,70 @@ docker-compose up --build
 
 Jenkins will be available at `http://localhost:8080`
 
+After startup, run the seed job to create all pipeline jobs defined in `jobs/seed.groovy`.
+
 ### Installed plugins
 
 | Plugin | Description |
 | --- | --- |
-| configuration-as-code | Jenkins configuration as code |
-| job-dsl | Job DSL for programmatic job creation |
+| configuration-as-code | Jenkins configuration as code (JCasC) |
+| job-dsl | Programmatic job creation via seed job |
 | git | Git SCM integration |
 | git-client | Git client library (git dependency) |
-| workflow-aggregator | Pipeline suite (includes all core pipeline plugins) |
+| workflow-aggregator | Pipeline suite — includes all core pipeline plugins |
 | pipeline-model-definition | Declarative pipeline syntax |
+| pipeline-groovy-lib | Shared Groovy library support |
+| docker-workflow | Docker Pipeline plugin |
+| docker-commons | Shared Docker utilities |
 | credentials-binding | Bind credentials to environment variables |
+| plain-credentials | Plain text credentials storage |
+| ssh-credentials | SSH credentials storage |
 | ws-cleanup | Workspace cleanup after builds |
+| timestamper | Timestamps in build logs |
+| ansicolor | Colored output in build logs |
 | blueocean | Cool UI |
 
 ## Pipeline Job management
 
-Add pipeline job definitions at the bottom of `jenkins.scasc.yaml` under the `jobs:`.
+Add pipeline job definitions to `jobs/seed.groovy`, then re-run the seed job.
 
-### Example of the job definition:
+### Job definition example
 
-```yaml
-  - script: >
-      pipelineJob('folder/job-name') {
-        definition {
-          cpsScm {
+```groovy
+pipelineJob('folder/job-name') {
+    definition {
+        cpsScm {
             scm {
-              git {
-                remote {
-                  url('https://github.com/github-username/repository-name.git')
+                git {
+                    remote {
+                        url('https://github.com/username/repo.git')
+                    }
+                    branch('branch')
                 }
-                branch('branch')
-              }
             }
             scriptPath('path/to/Jenkinsfile')
-            lightweight(true)
-          }
+            lightweight(false)
         }
-      }
+    }
+}
+```
+
+### Using shared library steps
+
+Available steps: `runTests`, `dockerBuild`, `pruneDockerTags`
+
+```groovy
+@Library('shared') _
+
+pipeline {
+    stage('Test backend') {
+        steps {
+            runTests(
+                workDir:     'backend',
+                composeFile: 'docker-compose.test.yaml'
+            )       
+        }
+    }
+}
+
 ```
