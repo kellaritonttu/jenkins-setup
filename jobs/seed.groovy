@@ -45,16 +45,8 @@ pipelineJob('simple-chat/test-backend') {
                 git {
                     remote {
                         url('https://github.com/kellaritonttu/simple-chat.git')
-                        refspec('+refs/heads/*:refs/remotes/origin/*')
                     }
                     branch('dev')
-                    extensions {
-                        cloneOptions {
-                            noTags(false)
-                            shallow(true)
-                            depth(1)
-                        }
-                    }
                 }
             }
             scriptPath('backend/Jenkinsfile.test')
