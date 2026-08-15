@@ -6,7 +6,7 @@ pipeline (
     parameters {
         string(name: 'REPO',      defaultValue: 'simple-chat-backend', description: 'Docker Hub repo name')
         string(name: 'USERNAME',  defaultValue: 'harhatilatonttu',     description: 'Docker Hub username')
-        string(name: 'KEEP_LAST', defaultValue: '3',            description: 'Number of tags to keep')
+        string(name: 'KEEP_LAST', defaultValue: '3',                   description: 'Number of tags to keep')
     }
 
     stages {

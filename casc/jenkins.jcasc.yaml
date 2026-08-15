@@ -31,17 +31,22 @@ credentials:
 
 jobs:
   - script: >
-      pipelineJob('seed') {
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote { url('https://github.com/kellaritonttu/jenkins-setup') }
-                branch('main')
-              }
+      freeStyleJob('seed') {
+        scm {
+          git {
+            remote {
+              url('https://github.com/kellaritonttu/jenkins-setup')
             }
-            scriptPath('jobs/seed.groovy')
-            lightweight(true)
+            branch('main')
+          }
+        }
+        steps {
+          jobDsl {
+            targets('jobs/seed.groovy')
+            removedJobAction('DELETE')
+            removedViewAction('DELETE')
+            sandbox(false)
+            additionalClasspath('')
           }
         }
       }
