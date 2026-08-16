@@ -1,3 +1,5 @@
+import org.myjenkins.Docker
+
 def call() {
-    sh 'docker logout || true'
+    new Docker(this).logout()
 }

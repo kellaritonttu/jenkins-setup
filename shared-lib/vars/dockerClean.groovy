@@ -1,7 +1,7 @@
-def call(Map config = [:]) {
-    def image = config.image ?: error('dockerClean: image is required')
+import org.myjenkins.Docker
 
-    sh """
-            docker rmi ${image} || true
-        """
+def call(Map config = [:]) {
+    def images = config.images ?: error('dockerClean: images is required')
+
+    new Docker(this).clean(images)
 }
