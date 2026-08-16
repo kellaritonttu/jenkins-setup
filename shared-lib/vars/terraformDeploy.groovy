@@ -1,6 +1,5 @@
 def call(Map config = [:]) {
     def terraformDir  = config.terraformDir  ?: 'terraform'
-    def imageTag      = config.imageTag      ?: error('terraformDeploy: imageTag is required')
     def credentialsId = config.credentialsId ?: 'terraform-cloud-token'
 
     withCredentials([string(
