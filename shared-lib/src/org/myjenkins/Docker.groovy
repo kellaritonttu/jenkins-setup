@@ -6,14 +6,8 @@ class Docker implements Serializable {
 
     Docker(steps) { this.steps }
 
-    static void login(String credentialsId) {
-        withCredentials([usernamePassword(
-            credentialsId: credentialsId,
-            usernameVariable: 'DOCKER_USER',
-            passwordVariable: 'DOCKER_PASS'
-        )]) {
-            steps.sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-        }
+    static void login() {
+        steps.sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
     }
 
     void build(Map config = [:]) {
