@@ -1,19 +1,18 @@
-// vars/gitPush.groovy
 def call(Map config = [:]) {
     def branch        = config.branch        ?: 'main'
-    def repo          = config.repo          ?: error('gitPush: repo is required')
     def credentialsId = config.credentialsId ?: 'github-credentials'
-    
-    def repoHost      = repo.replace('https://', '')
+
+    if (!branch.matches(/^[a-zA-Z0-9_\-.\/]+$/)) {
+        error("gitPush: Invalid branch name '${branch}'")
+    }
 
     withCredentials([usernamePassword(
         credentialsId: credentialsId,
         usernameVariable: 'GIT_USER',
         passwordVariable: 'GIT_TOKEN'
     )]) {
-        sh """
-            git remote set-url origin https://\${GIT_USER}:\${GIT_TOKEN}@${repoHost}
-            git push origin HEAD:${branch}
-        """
+ 
+        sh ["git", "push", "origin", "HEAD:${branch}"]
+ 
     }
 }
