@@ -11,8 +11,9 @@ def call(Map config = [:]) {
         usernameVariable: 'GIT_USER',
         passwordVariable: 'GIT_TOKEN'
     )]) {
- 
-        sh "git push origin HEAD:${branch}"
- 
+        sh """
+            REPO_PATH=\$(git remote get-url origin | sed 's|https://github.com/||')
+            git push https://\${GIT_USER}:\${GIT_TOKEN}@github.com/\${REPO_PATH} HEAD:${branch}
+        """
     }
 }
