@@ -17,39 +17,32 @@ credentials:
     domainCredentials:
       - credentials:
           - usernamePassword:
-            id: dockerhub-credentials
-            username: "${DOCKERHUB_USERNAME}"
-            password: "${DOCKERHUB_TOKEN}"
-            description: "Docker Hub access token"
-            scope: GLOBAL 
+              id: dockerhub-credentials
+              username: "${DOCKERHUB_USERNAME}"
+              password: "${DOCKERHUB_TOKEN}"
+              description: "Docker Hub access token"
+              scope: GLOBAL 
 
           - usernamePassword:
-            id: github-credentials
-            username: "${GITHUB_USERNAME}"
-            password: "${GITHUB_TOKEN}"
-            description: "GitHub fine-grained PAT"
-            scope: GLOBAL
+              id: github-credentials
+              username: "${GITHUB_USERNAME}"
+              password: "${GITHUB_TOKEN}"
+              description: "GitHub fine-grained PAT"
+              scope: GLOBAL
 
           - string:
-            id: terraform-cloud-token
-            secret: "${TF_CLOUD_TOKEN}"
-            scope: GLOBAL
-            description: "Terraform Cloud API token"
+              id: terraform-cloud-token
+              secret: "${TF_CLOUD_TOKEN}"
+              description: "Terraform Cloud API token"
+              scope: GLOBAL
 
 jobs:
   - script: >
       freeStyleJob('seed') {
-        scm {
-          git {
-            remote {
-              url('https://github.com/kellaritonttu/jenkins-setup')
-            }
-            branch('main')
-          }
-        }
+        customWorkspace('/var/jenkins_jobs')
         steps {
           jobDsl {
-            targets('jobs/seed.groovy')
+            targets('seed.groovy')
             removedJobAction('DELETE')
             removedViewAction('DELETE')
             sandbox(false)
@@ -73,7 +66,7 @@ unclassified:
   globalLibraries:
     libraries:
       - name: "shared"
-        defaultVersion: "main"
+        defaultVersion: "dev"
         implicit: false
         retriever:
           modernSCM:
