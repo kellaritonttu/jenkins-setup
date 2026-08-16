@@ -1,3 +1,5 @@
+import org.myjenkins.Git
+
 def call(Map config = [:]) {
     def branch        = config.branch        ?: 'main'
     def message       = config.message       ?: "ci: update image tags"
@@ -11,12 +13,14 @@ def call(Map config = [:]) {
         usernameVariable: 'GIT_USER',
         passwordVariable: 'GIT_TOKEN'
     )]) {
+        def url = Git.authenticatedUrl(repo, env.GIT_USER, env.GIT_TOKEN)
+        
         sh """
             cd ${dir}
             git add ${file}
             if ! git diff --staged --quiet; then
                 git commit -m "${message}"
-                git push https://\${GIT_USER}:\${GIT_TOKEN}@${repo.replace('https://', '')} ${branch}
+                git push ${url} ${branch}
             else
                 echo "No changes to commit"
             fi
