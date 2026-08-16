@@ -17,12 +17,7 @@ class Docker implements Serializable {
     }
 
     void build(Map config = [:]) {
-        def image      = config.image      ?: steps.error('Docker.build: image is required')
-        def tag        = config.tag        ?: steps.error('Docker.build: tag is required')
-        def dockerfile = config.dockerfile ?: 'Dockerfile'
-        def context    = config.context    ?: '.'
-
-        steps.sh "docker build -f ${dockerfile} -t ${image}:${tag} ${context}"
+        steps.sh "docker build -f ${config.dockerfile} -t ${config.image}:${config.tag} ${config.context}"
     }
 
     void push(String image, String tag) {
