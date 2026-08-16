@@ -1,6 +1,4 @@
-import org.myjenkins.DockerHub
-
-def call(Map confit = [:]) {
+def call(Map config = [:]) {
     def image         = config.image         ?: error('dockerBuild: image is required')
     def tag           = config.tag           ?: error('dockerBuild: tag is required')
     def dockerfile    = config.dockerfile    ?: 'Dockerfile'
@@ -8,7 +6,14 @@ def call(Map confit = [:]) {
 
     sh "docker build -f ${dockerfile} -t ${image}:${tag} ."
 
-    def hub = new DockerHub(this)
-    hub.login(credentialsId)
-    hub.push(image, tag)
+    withCredentials([usernamePassword(
+        credentialsId: credentialsId,
+        usernameVariable: 'DOCKERHUB_USER',
+        passwordVariable: 'DOCKERHUB_TOKEN'
+    )]) {
+        sh """
+            echo \$DOCKERHUB_TOKEN | docker login -u \$DOCKERHUB_USER --password-stdin
+            docker push ${image}:${tag}
+        """
+    }
 }

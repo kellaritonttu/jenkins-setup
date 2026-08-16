@@ -1,4 +1,3 @@
-import org.myjenkins.DockerHub
 import groovy.json.JsonSlurperClassic
 
 def call(Map config = [:]) {
