@@ -12,7 +12,7 @@ def call(Map config = [:]) {
         passwordVariable: 'GIT_TOKEN'
     )]) {
  
-        sh ["git", "push", "origin", "HEAD:${branch}"]
+        sh "git push origin HEAD:${branch}"
  
     }
 }
