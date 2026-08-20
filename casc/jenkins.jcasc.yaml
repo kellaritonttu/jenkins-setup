@@ -30,20 +30,19 @@ credentials:
               description: "GitHub fine-grained PAT"
               scope: GLOBAL
 
+          - string:
+              id: terraform-cloud-token
+              secret: "${TF_CLOUD_TOKEN}"
+              description: "Terraform Cloud API token"
+              scope: GLOBAL
+
 jobs:
   - script: >
       freeStyleJob('seed') {
-        scm {
-          git {
-            remote {
-              url('https://github.com/kellaritonttu/jenkins-setup')
-            }
-            branch('main')
-          }
-        }
+        customWorkspace('/var/jenkins_jobs')
         steps {
           jobDsl {
-            targets('jobs/seed.groovy')
+            targets('seed.groovy')
             removedJobAction('DELETE')
             removedViewAction('DELETE')
             sandbox(false)
@@ -67,7 +66,7 @@ unclassified:
   globalLibraries:
     libraries:
       - name: "shared"
-        defaultVersion: "main"
+        defaultVersion: "dev"
         implicit: false
         retriever:
           modernSCM:
