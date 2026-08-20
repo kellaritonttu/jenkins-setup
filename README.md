@@ -81,7 +81,16 @@ pipelineJob('folder/job-name') {
 
 ### Using shared library steps
 
-Available steps: `runTests`, `dockerBuild`, `pruneDockerTags`
+#### Available shared steps
+
+| Group | steps |
+| -- | -- |
+| Git | `gitCheckout`<br> `gitConfig`<br> `gitAdd`<br> `gitCommint`<br> `gitPush` |
+| Docker | `dockerLogin`<br> `dockerBuildPush`<br> `dockerClean`<br>  `dockerLogout`<br> `pruneDockerTags` |
+| Terraform | `terraformDeploy`<br> `updateImageTag` |
+| Tests | `runTests` |
+
+#### Example of shared steps usage
 
 ```groovy
 @Library('shared') _
