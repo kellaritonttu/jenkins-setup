@@ -82,6 +82,7 @@ pipelineJob('folder/job-name') {
 ### Using shared library steps
 
 #### Available shared steps
+
 | Group | steps |
 | -- | -- |
 | Git | `gitCheckout`<br> `gitConfig`<br> `gitAdd`<br> `gitCommint`<br> `gitPush` |

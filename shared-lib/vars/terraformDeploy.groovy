@@ -9,6 +9,8 @@ def call(Map config = [:]) {
         dir(terraformDir) {
             sh """
                 terraform init
+                terraform taint module.frontend.google_cloud_run_service.this || true
+                terraform taint module.backend.google_cloud_run_service.this || true
                 terraform apply -auto-approve
             """
         }
